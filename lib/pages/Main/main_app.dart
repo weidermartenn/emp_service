@@ -1,6 +1,6 @@
+import 'package:Employment_Service/pages/Auth/auth_page.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
-
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
 
@@ -89,7 +89,14 @@ class MainApp extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [ 
                                   TextButton( 
-                                    onPressed: null,
+                                    onPressed: () {
+                                      Navigator.push( 
+                                        context,
+                                        MaterialPageRoute( 
+                                          builder: (context) => const AuthPage(),
+                                        )
+                                      );
+                                    },
                                     style: ButtonStyle(
                                       overlayColor: MaterialStateProperty.all<Color>(const Color.fromARGB(96, 146, 146, 146)),
                                       fixedSize: const MaterialStatePropertyAll<Size>(Size(200, 50)),
@@ -130,7 +137,7 @@ class MainApp extends StatelessWidget {
                                   )                               
                                 ]
                               ),   
-                            )                        
+                            ),                        
                           ],
                         )
                       )
