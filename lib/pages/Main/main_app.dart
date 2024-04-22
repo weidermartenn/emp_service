@@ -14,28 +14,14 @@ class MainApp extends StatelessWidget {
               elevation: MaterialStateProperty.all<double>(0.0),
               foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
               overlayColor: MaterialStateProperty.all<Color>(Colors.black38),
-            )
-          )
+            ),
+          ),
+          scaffoldBackgroundColor: const Color.fromARGB(255, 11, 11, 11),
       ),
       home: Scaffold(
         body: LayoutBuilder(
           builder: (context, constraints) {
-            return Center(
-              child: Container(
-                width: 1920,
-                height: 1080,
-                constraints: BoxConstraints(
-                  maxWidth: constraints.maxWidth,
-                  maxHeight: constraints.maxHeight,
-                ),
-                decoration: const BoxDecoration(
-                  // image: DecorationImage(
-                  //   image: AssetImage('assets/images/main_page_pic.jpg'),
-                  //   fit: BoxFit.cover, // Изображение сохраняет пропорции и заполняет всю область
-                  // ),
-                  color: Color.fromARGB(255, 11, 11, 11),
-                ),
-                child: Center( 
+            return Center( 
                   child: Padding( 
                     padding: const EdgeInsets.only(top: 5),
                     child: ConstrainedBox( 
@@ -150,9 +136,7 @@ class MainApp extends StatelessWidget {
                       )
                     )
                   )
-                ),
-              ),
-            );
+                );
           },
         ),
       ),
@@ -160,7 +144,7 @@ class MainApp extends StatelessWidget {
   }
 }
 
-exitDialog(BuildContext context){ 
+exitDialog(BuildContext dialogContext){ 
   Widget cancelButton = TextButton( 
     child: const Text(
       'Отмена',
@@ -170,7 +154,7 @@ exitDialog(BuildContext context){
       ),
     ),
     onPressed: () {
-      Navigator.pop(context);
+      Navigator.of(dialogContext, rootNavigator: true).pop();
     },
   );
   Widget confirmButton = TextButton( 
@@ -183,7 +167,7 @@ exitDialog(BuildContext context){
     ),
     onPressed: () { 
       exit(0);
-    }
+    },
   );
 
   AlertDialog alert = AlertDialog( 
@@ -205,7 +189,7 @@ exitDialog(BuildContext context){
     ],
   );
   showDialog(
-    context: context, 
+    context: dialogContext, 
     builder: (BuildContext context){
       return alert;
     },
