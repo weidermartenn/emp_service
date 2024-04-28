@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:Employment_Service/pages/Main/main_app.dart';
 
@@ -121,8 +123,8 @@ class _AuthPageState extends State<AuthPage>{
                                             ),
                                             style: const TextStyle(color: Colors.white),
                                             validator: (value) {
-                                              if (value == null || value.isEmpty) {
-                                                return 'Пожалуйста, введите данные.';
+                                              if (value == null || value.isEmpty) { 
+                                                return incorrectInputDialog(context);
                                               }  
                                               return null;
                                             },
@@ -135,7 +137,7 @@ class _AuthPageState extends State<AuthPage>{
                                           child: ElevatedButton( 
                                             onPressed: () {
                                               if (_formKey.currentState!.validate()) {
-                                                print('Вход выполнен');
+                                                log(1);
                                               }
                                             },
                                             style: ElevatedButton.styleFrom(
@@ -173,5 +175,48 @@ class _AuthPageState extends State<AuthPage>{
       ),
     );
   }
+}
+
+incorrectInputDialog(BuildContext dialogContext){ 
+  Widget okButton = TextButton( 
+    onPressed: () {
+      Navigator.of(dialogContext, rootNavigator: true).pop();
+    },
+    style: TextButton.styleFrom(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      )
+    ), 
+    child: const Text( 
+      'Понимаю',
+      style: TextStyle(
+        color: Color.fromARGB(184, 0, 0, 0),
+        fontWeight: FontWeight.w600,
+      ),
+    ),
+  );
+  AlertDialog alert = AlertDialog( 
+    title: Image.asset( 
+      'assets/icons/black/incorrect_icon_black.png',
+      width: 40,
+      height: 40,
+    ),
+    content: const Text( 
+      'Пожалуйста, заполните форму.',
+      style: TextStyle( 
+        fontSize: 16,
+      )
+    ), 
+    actionsAlignment: MainAxisAlignment.center,
+    actions: [
+      okButton,
+    ],
+  );
+  showDialog( 
+    context: dialogContext,
+    builder: (BuildContext context){ 
+      return alert;
+    },
+  );
 }
   
