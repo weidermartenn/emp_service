@@ -188,7 +188,7 @@ incorrectInputDialog(BuildContext dialogContext){
       )
     ), 
     child: const Text( 
-      'Понимаю',
+      'ОК',
       style: TextStyle(
         color: Color.fromARGB(184, 0, 0, 0),
         fontWeight: FontWeight.w600,
