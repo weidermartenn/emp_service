@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:Employment_Service/pages/Main/main_app.dart';
 
@@ -7,11 +5,15 @@ class AuthPage extends StatefulWidget {
   const AuthPage({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _AuthPageState createState() => _AuthPageState();
 }
 
 class _AuthPageState extends State<AuthPage>{ 
   final _formKey = GlobalKey<FormState>();
+  final TextEditingController _dataController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -25,6 +27,18 @@ class _AuthPageState extends State<AuthPage>{
             ),
           ),
         scaffoldBackgroundColor: const Color.fromARGB(255, 11, 11, 11),
+        inputDecorationTheme: const InputDecorationTheme(
+          labelStyle: TextStyle(
+            color: Colors.white,
+            fontSize: 14,
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.white),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Color.fromARGB(90, 255, 255, 255)),
+          ),
+        )
       ),
       home: Scaffold(
         body: LayoutBuilder(
@@ -35,7 +49,7 @@ class _AuthPageState extends State<AuthPage>{
                     child: ConstrainedBox( 
                       constraints: const BoxConstraints(
                         maxWidth: 1920 / 3,
-                        maxHeight: 1080 / 3.5,
+                        maxHeight: 1080 / 3,
                       ),
                       child: Container( 
                         decoration: BoxDecoration( 
@@ -108,40 +122,43 @@ class _AuthPageState extends State<AuthPage>{
                                           width: 300,
                                           height: 70,
                                           child: TextFormField(
+                                            controller: _dataController,
                                             decoration: const InputDecoration(
-                                              labelText: 'Номер телефона/Почта',
-                                              labelStyle: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 14,
-                                              ),
-                                              enabledBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(color: Colors.white),
-                                              ),
-                                              focusedBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(color: Color.fromARGB(90, 255, 255, 255)),
-                                              ),
+                                              labelText: 'Имя пользователя/Телефон' 
                                             ),
                                             style: const TextStyle(color: Colors.white),
-                                            validator: (value) {
-                                              if (value == null || value.isEmpty) { 
-                                                return incorrectInputDialog(context);
-                                              }  
-                                              return null;
-                                            },
+                                            validator: (value) => value == null || value.isEmpty ? 'Поле не может быть пустым' : null,       
                                           ),
                                         ),
-                                        SizedBox(height: 30),
+                                        SizedBox( 
+                                          width: 300,
+                                          height: 70,
+                                          child: TextFormField(
+                                            controller: _passwordController,
+                                            decoration: const InputDecoration(
+                                              labelText: 'Пароль',
+                                            ),
+                                            obscureText: true,
+                                            obscuringCharacter: '*',
+                                            style: const TextStyle(color: Colors.white),
+                                            validator: (value) => value == null || value.isEmpty ? 'Поле не может быть пустым' : null,
+                                          )
+                                        ),
+                                        const SizedBox(height: 30),
                                         SizedBox( 
                                           width: 150,
                                           height: 50,
                                           child: ElevatedButton( 
                                             onPressed: () {
                                               if (_formKey.currentState!.validate()) {
-                                                log(1);
+                                                
+                                              }
+                                              else {
+                                                incorrectInputDialog(context);
                                               }
                                             },
                                             style: ElevatedButton.styleFrom(
-                                              backgroundColor: Color.fromARGB(197, 11, 11, 11),
+                                              backgroundColor: const Color.fromARGB(197, 105, 105, 105),
                                               shape: RoundedRectangleBorder(
                                                 borderRadius: BorderRadius.circular(10),
                                               ),
@@ -150,7 +167,7 @@ class _AuthPageState extends State<AuthPage>{
                                             child: const Text(
                                               'Войти',
                                               style: TextStyle(
-                                                color: Color.fromARGB(166, 255, 255, 255),
+                                                color: Color.fromARGB(255, 255, 255, 255),
                                                 fontSize: 16,
                                               ),
                                             ),
