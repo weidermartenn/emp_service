@@ -152,7 +152,7 @@ class _AuthPageState extends State<AuthPage>{
                                           child: ElevatedButton( 
                                             onPressed: () {
                                               if (_formKey.currentState!.validate()) {
-                                                
+                                                successDialog(context);
                                               }
                                               else {
                                                 emptyInputDialog(context);

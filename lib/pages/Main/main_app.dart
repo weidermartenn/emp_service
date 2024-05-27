@@ -1,4 +1,5 @@
 import 'package:Employment_Service/pages/Auth/auth_page.dart';
+import 'package:Employment_Service/pages/Registry/reg_page.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 class MainApp extends StatelessWidget {
@@ -116,7 +117,14 @@ class MainApp extends StatelessWidget {
                                     ),
                                   ),
                                   TextButton( 
-                                  onPressed: null,
+                                    onPressed: () {
+                                        Navigator.push( 
+                                          context,
+                                          MaterialPageRoute( 
+                                            builder: (context) => const RegPage(),
+                                          )
+                                        );
+                                      },
                                     style: ButtonStyle(
                                       overlayColor: MaterialStateProperty.all<Color>(const Color.fromARGB(96, 146, 146, 146)),
                                       fixedSize: const MaterialStatePropertyAll<Size>(Size(200, 50)),

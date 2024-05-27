@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:Employment_Service/pages/Main/main_app.dart';
+import 'package:Employment_Service/scripts/dialogs.dart';
 
 class RegPage extends StatefulWidget {
   const RegPage({super.key});
@@ -11,6 +12,11 @@ class RegPage extends StatefulWidget {
 
 class _RegPageState extends State<RegPage>{ 
   final _formKey = GlobalKey<FormState>();
+  final TextEditingController _loginController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _passwordController2 = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -24,6 +30,18 @@ class _RegPageState extends State<RegPage>{
             ),
           ),
         scaffoldBackgroundColor: const Color.fromARGB(255, 11, 11, 11),
+        inputDecorationTheme: const InputDecorationTheme(
+          labelStyle: TextStyle(
+            color: Colors.white,
+            fontSize: 14,
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.white),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Color.fromARGB(90, 255, 255, 255)),
+          ),
+        )
       ),
       home: Scaffold(
         body: LayoutBuilder(
@@ -107,98 +125,45 @@ class _RegPageState extends State<RegPage>{
                                           width: 300,
                                           height: 70,
                                           child: TextFormField(
+                                            controller: _loginController,
                                             decoration: const InputDecoration(
                                               labelText: 'Придумайте имя пользователя',
-                                              labelStyle: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 14,
-                                              ),
-                                              enabledBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(color: Colors.white),
-                                              ),
-                                              focusedBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(color: Color.fromARGB(90, 255, 255, 255)),
-                                              ),
                                             ),
-                                            style: const TextStyle(color: Colors.white),
-                                            validator: (value) {
-                                              if (value == null || value.isEmpty) { 
-                                                return incorrectInputDialog(context);
-                                              }  
-                                              return null;
-                                            },
+                                            validator: (value) => value == null || value.isEmpty ? 'Поле не может быть пустым' : null, 
                                           ),
                                         ),
                                         SizedBox( 
                                           width: 300,
                                           height: 70,
                                           child: TextFormField(
+                                            controller: _passwordController,
                                             decoration: const InputDecoration(
                                               labelText: 'Придумайте пароль',
-                                              labelStyle: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 14,
-                                              ),
-                                              enabledBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(color: Colors.white),
-                                              ),
-                                              focusedBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(color: Color.fromARGB(90, 255, 255, 255)),
-                                              ),
                                             ),
-                                            style: const TextStyle(color: Colors.white),
-                                            validator: (value) {
-                                              if (value == null || value.isEmpty) { 
-                                                return incorrectInputDialog(context);
-                                              }  
-                                              return null;
-                                            },
+                                            validator: (value) => value == null || value.isEmpty ? 'Поле не может быть пустым' : null, 
                                           )
                                         ),
                                         SizedBox( 
                                           width: 300,
                                           height: 70,
                                           child: TextFormField(
+                                            controller: _passwordController2,
                                             decoration: const InputDecoration(
                                               labelText: 'Повторите пароль',
-                                              labelStyle: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 14,
-                                              ),
-                                              enabledBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(color: Colors.white),
-                                              ),
-                                              focusedBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(color: Color.fromARGB(90, 255, 255, 255)),
-                                              ),
                                             ),
                                             obscureText: true,
                                             obscuringCharacter: '*',
                                             style: const TextStyle(color: Colors.white),
-                                            validator: (value) {
-                                              if (value == null || value.isEmpty) { 
-                                                return incorrectInputDialog(context);
-                                              }  
-                                              return null;
-                                            },
+                                            validator: (value) => value == null || value.isEmpty ? 'Поле не может быть пустым' : null, 
                                           )
                                         ),
                                         SizedBox(
                                           width: 300,
                                           height: 70,
                                           child: TextFormField(
+                                            controller: _emailController,
                                             decoration: const InputDecoration(
                                               labelText: 'Email',
-                                              labelStyle: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 14,
-                                              ),
-                                              enabledBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(color: Colors.white),
-                                              ),
-                                              focusedBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(color: Color.fromARGB(90, 255, 255, 255)),
-                                              ),
                                             ),
                                             style: const TextStyle(color: Colors.white),
                                             keyboardType: TextInputType.emailAddress, // Указывает тип клавиатуры для ввода email
@@ -219,7 +184,10 @@ class _RegPageState extends State<RegPage>{
                                           child: ElevatedButton( 
                                             onPressed: () {
                                               if (_formKey.currentState!.validate()) {
-                                                debugPrint('Валидация прошла успешно');
+                                                successDialog(context);
+                                              }
+                                              else {
+                                                emptyInputDialog(context);
                                               }
                                             },
                                             style: ElevatedButton.styleFrom(
