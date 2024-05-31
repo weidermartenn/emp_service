@@ -1,4 +1,3 @@
-import 'package:postgres/legacy.dart';
 import 'package:postgres/postgres.dart';
 
 Future<String> isAuth(data, pass) async {
