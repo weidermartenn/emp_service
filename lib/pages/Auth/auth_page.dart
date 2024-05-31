@@ -158,6 +158,7 @@ class _AuthPageState extends State<AuthPage>{
                                                 var data = _dataController.text;
                                                 var pass = _passwordController.text;
                                                 final result = await isAuth(data, pass);
+                                                
 
                                                 if (data == 'admin' && pass == '1234') {
                                                   // Navigator.push( 
@@ -168,8 +169,9 @@ class _AuthPageState extends State<AuthPage>{
                                                   // );
                                                   debugPrint('admin');
                                                 }
-                                                if (result == 'true'){
+                                                else if (result == 'true') {
                                                   successInputDialog(context);
+                                                  shown = true;
                                                   debugPrint('user');
                                                 }
                                                 else{
