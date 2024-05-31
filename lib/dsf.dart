@@ -3,13 +3,12 @@ import 'package:postgres/postgres.dart';
 
 class Accounts {
   final String id;
-  final String email;
   final String phone;
   final String password;
   final String salt;
   final String username;
 
-  Accounts(this.id, this.email, this.phone, this.password, this.salt, this.username);
+  Accounts(this.id, this.phone, this.password, this.salt, this.username);
 }
 
 void main() {
@@ -63,7 +62,7 @@ class _PageState extends State<Page> {
 
     List<List<dynamic>> rawData = result.toList();
 
-    List<Accounts> accs = rawData.map((row) => Accounts(row[0], row[1], row[2], row[3], row[4], row[5])).toList();
+    List<Accounts> accs = rawData.map((row) => Accounts(row[0], row[1], row[2], row[3], row[4])).toList();
 
     await conn.close();
     return accs;
@@ -102,13 +101,12 @@ class _PageState extends State<Page> {
                     return DataRow(
                       onSelectChanged: (selected) {
                         if (selected != null && selected) {
-                          var rowData = [acc.id, acc.email, acc.phone, acc.password, acc.salt, acc.username];
+                          var rowData = [acc.id, acc.phone, acc.password, acc.salt, acc.username];
                           print(rowData);
                         }
                       },
                       cells: [
                         DataCell(Text(acc.id)),
-                        DataCell(Text(acc.email)),
                         DataCell(Text(acc.phone)),
                         DataCell(Text(acc.password)),
                         DataCell(Text(acc.salt)),

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:Employment_Service/pages/Main/main_app.dart';
+import 'package:Employment_Service/pages/User/user_page.dart';
 import 'package:Employment_Service/scripts/dialogs.dart';
 import 'auth.dart';
 import 'dialogs.dart';
+import 'package:Employment_Service/classes/classes.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});
@@ -170,9 +172,14 @@ class _AuthPageState extends State<AuthPage>{
                                                   debugPrint('admin');
                                                 }
                                                 else if (result == 'true') {
-                                                  successInputDialog(context);
-                                                  shown = true;
-                                                  debugPrint('user');
+                                                  var accounts = Accounts('id', 'phone', 'password', 'salt', data);
+                                                  Navigator.push( 
+                                                    context,
+                                                    MaterialPageRoute( 
+                                                      builder: (context) =>  UserPage(username: accounts.getName()),
+                                                    )
+                                                  );
+                                                  successDialog(context);
                                                 }
                                                 else{
                                                   debugPrint('daun');

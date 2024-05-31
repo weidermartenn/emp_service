@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:Employment_Service/classes/classes.dart';
 
-class UserPage extends StatefulWidget {
-  const UserPage({super.key});
-
-  @override
-  State<UserPage> createState() => _UserPageState();
-}
-
-class _UserPageState extends State<UserPage> {
+class UserPage extends StatelessWidget {
+  final String username;
+  const UserPage({required this.username});
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -96,8 +92,8 @@ class _UserPageState extends State<UserPage> {
                                       onTap: () {
                                         Navigator.pushNamed(context, '/auth');
                                       },
-                                      child: const Text(
-                                        'имя ',
+                                      child: Text(
+                                        username,
                                         style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 20,
