@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:Employment_Service/pages/Main/main_app.dart';
 import 'package:Employment_Service/scripts/dialogs.dart';
+import 'auth.dart';
+import 'dialogs.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});
@@ -150,9 +152,29 @@ class _AuthPageState extends State<AuthPage>{
                                           width: 150,
                                           height: 50,
                                           child: ElevatedButton( 
-                                            onPressed: () {
+                                            onPressed: () async {
                                               if (_formKey.currentState!.validate()) {
                                                 successDialog(context);
+                                                var data = _dataController.text;
+                                                var pass = _passwordController.text;
+                                                final result = await isAuth(data, pass);
+
+                                                if (data == 'admin' && pass == '1234') {
+                                                  // Navigator.push( 
+                                                  //   context,
+                                                  //   MaterialPageRoute( 
+                                                  //     builder: (context) => const AdminPage(),
+                                                  //   )
+                                                  // );
+                                                  debugPrint('admin');
+                                                }
+                                                if (result == 'true'){
+                                                  successInputDialog(context);
+                                                  debugPrint('user');
+                                                }
+                                                else{
+                                                  debugPrint('daun');
+                                                }
                                               }
                                               else {
                                                 emptyInputDialog(context);
