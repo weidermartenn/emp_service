@@ -188,7 +188,7 @@ class _RegPageState extends State<RegPage>{
                                           height: 70,
                                           child: TextFormField(
                                             decoration: const InputDecoration(
-                                              labelText: 'Email',
+                                              labelText: 'Номер телефона',
                                               labelStyle: TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 14,
@@ -205,8 +205,8 @@ class _RegPageState extends State<RegPage>{
                                             validator: (value) {
                                               if (value == null || value.isEmpty) {
                                                 return 'Пожалуйста, введите адрес электронной почты'; // Сообщение об ошибке, если поле пустое
-                                              } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
-                                                return 'Пожалуйста, введите действительный адрес электронной почты'; // Сообщение об ошибке, если формат email неверный
+                                              } else if (value.length > 11) {
+                                                return 'Пожалуйста, введите корректный номер телефона'; // Сообщение об ошибке, если формат email неверный
                                               }
                                               return null;
                                             },
@@ -219,7 +219,10 @@ class _RegPageState extends State<RegPage>{
                                           child: ElevatedButton( 
                                             onPressed: () {
                                               if (_formKey.currentState!.validate()) {
-                                                debugPrint('Валидация прошла успешно');
+                                                
+                                              }
+                                              else {
+                                                incorrectInputDialog(context);
                                               }
                                             },
                                             style: ElevatedButton.styleFrom(
