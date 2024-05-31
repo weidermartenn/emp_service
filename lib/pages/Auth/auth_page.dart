@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:Employment_Service/pages/Main/main_app.dart';
 import 'package:Employment_Service/pages/User/user_page.dart';
+import 'package:Employment_Service/pages/Admin/admin_page.dart';
 import 'package:Employment_Service/scripts/dialogs.dart';
 import 'auth.dart';
 import 'dialogs.dart';
@@ -43,7 +44,11 @@ class _AuthPageState extends State<AuthPage>{
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Color.fromARGB(90, 255, 255, 255)),
           ),
-        )
+        ),
+        textSelectionTheme: const TextSelectionThemeData( 
+          cursorColor: Color.fromARGB(255, 62, 84, 145),
+          selectionColor: Color.fromARGB(255, 62, 84, 145),
+        ),
       ),
       home: Scaffold(
         body: LayoutBuilder(
@@ -156,27 +161,25 @@ class _AuthPageState extends State<AuthPage>{
                                           child: ElevatedButton( 
                                             onPressed: () async {
                                               if (_formKey.currentState!.validate()) {
-                                                successDialog(context);
                                                 var data = _dataController.text;
                                                 var pass = _passwordController.text;
                                                 final result = await isAuth(data, pass);
-                                                
 
                                                 if (data == 'admin' && pass == '1234') {
-                                                  // Navigator.push( 
-                                                  //   context,
-                                                  //   MaterialPageRoute( 
-                                                  //     builder: (context) => const AdminPage(),
-                                                  //   )
-                                                  // );
-                                                  debugPrint('admin');
+                                                  Navigator.push( 
+                                                    context,
+                                                    MaterialPageRoute( 
+                                                      builder: (context) => const AdminPage(),
+                                                    )
+                                                  );
+                                                  successDialog(context);
                                                 }
                                                 else if (result == 'true') {
                                                   var accounts = Accounts('id', 'phone', 'password', 'salt', data);
                                                   Navigator.push( 
                                                     context,
                                                     MaterialPageRoute( 
-                                                      builder: (context) =>  UserPage(username: accounts.getName()),
+                                                      builder: (context) => UserPage(username: accounts.getName()),
                                                     )
                                                   );
                                                   successDialog(context);

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:Employment_Service/classes/classes.dart';
+import 'package:Employment_Service/pages/Auth/auth_page.dart';
 
 class UserPage extends StatelessWidget {
   final String username;
@@ -30,7 +31,10 @@ class UserPage extends StatelessWidget {
             borderSide: BorderSide(color: Color.fromARGB(90, 255, 255, 255)),
           ),
         ),
-       
+        textSelectionTheme: const TextSelectionThemeData( 
+          cursorColor: Color.fromARGB(255, 62, 84, 145),
+          selectionColor: Color.fromARGB(255, 62, 84, 145),
+        ),
       ),
       home: Scaffold(
         body: LayoutBuilder(builder: (context, constraints) {
@@ -46,7 +50,10 @@ class UserPage extends StatelessWidget {
                         margin: const EdgeInsets.only(left: 10),
                         child: IconButton(
                           onPressed: () {
-                            Navigator.pop(context);
+                            Navigator.push( 
+                              context,
+                              MaterialPageRoute(builder: (context) => const AuthPage()),
+                            );
                           },
                           icon: Image.asset('assets/icons/white/back_icon_white.png', width: 30, height: 30),
                         ),

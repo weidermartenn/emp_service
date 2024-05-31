@@ -4,7 +4,7 @@ import 'package:Employment_Service/pages/Admin/admin_page.dart';
 
 
 void main() => runApp(const MaterialApp(
-  home: AdminPage()
+  home: MainApp()
 ));
 
 

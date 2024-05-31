@@ -1,5 +1,4 @@
 import 'package:Employment_Service/pages/Auth/auth_page.dart';
-import 'package:Employment_Service/pages/Registry/reg_page.dart';
 import 'package:Employment_Service/scripts/dialogs.dart';
 import 'package:flutter/material.dart';
 class MainApp extends StatelessWidget {
@@ -115,34 +114,7 @@ class MainApp extends StatelessWidget {
                                         fontSize: 18,
                                       ),
                                     ),
-                                  ),
-                                  TextButton( 
-                                    onPressed: () {
-                                        Navigator.push( 
-                                          context,
-                                          MaterialPageRoute( 
-                                            builder: (context) => const RegPage(),
-                                          )
-                                        );
-                                      },
-                                    style: ButtonStyle(
-                                      overlayColor: MaterialStateProperty.all<Color>(const Color.fromARGB(96, 146, 146, 146)),
-                                      fixedSize: const MaterialStatePropertyAll<Size>(Size(200, 50)),
-                                      elevation: MaterialStateProperty.all<double>(2.0),
-                                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                        RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(5.0),
-                                        )
-                                      )
-                                    ),
-                                    child: const Text(
-                                      'Зарегестрироваться',
-                                      style: TextStyle( 
-                                        color: Color.fromARGB(185, 255, 255, 255),
-                                        fontSize: 18,
-                                      ),
-                                    ),
-                                  )                               
+                                  ),                           
                                 ]
                               ),   
                             ),                        
