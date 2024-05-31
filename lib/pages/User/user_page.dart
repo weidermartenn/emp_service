@@ -1,3 +1,4 @@
+import 'package:Employment_Service/pages/User/dialogs.dart';
 import 'package:flutter/material.dart';
 import 'package:Employment_Service/classes/classes.dart';
 import 'package:Employment_Service/pages/Auth/auth_page.dart';
@@ -70,7 +71,9 @@ class UserPage extends StatelessWidget {
                         ),
                       ),
                       TextButton( 
-                        onPressed: () {},
+                        onPressed: () { 
+                          benefitsDialog(context);
+                        },
                         child: const Text('Пособия', style: TextStyle(color: Colors.white, fontSize: 20)),
                       ),
                       const SizedBox(width: 50,),
@@ -90,14 +93,38 @@ class UserPage extends StatelessWidget {
                               ),
                               const Divider(thickness: 1, color: Color.fromARGB(255, 31, 31, 31)),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Image.asset('assets/icons/white/emp_icon_white.png', width: 45, height: 45),
                                   MouseRegion( 
                                     cursor: SystemMouseCursors.click,
                                     child: GestureDetector(
                                       onTap: () {
-                                        Navigator.pushNamed(context, '/auth');
+                                                  showModalBottomSheet( 
+                                                      context: context, 
+                                                      builder: (BuildContext context) { 
+                                                        return Container( 
+                                                          width: 500,
+                                                          height: 900,
+                                                          decoration: BoxDecoration(
+                                                            color: Color.fromARGB(255, 43, 32, 32),
+                                                          ),
+                                                          child: const Column( 
+                                                            children: [
+                                                              SizedBox(height: 15),
+                                                              Text('ФИО', style: TextStyle(color: Colors.white, fontSize: 20)),
+                                                              Divider(color: Colors.white),
+                                                              Text('Опыт работы', style: TextStyle(color: Colors.white)),
+                                                              Text('Образование', style: TextStyle(color: Colors.white)),
+                                                              Text('Специальность', style: TextStyle(color: Colors.white)),
+                                                              Divider(color: Colors.white),
+                                                              Text('Номер телефона', style: TextStyle(color: Colors.white, fontSize: 18)),
+                                                              
+                                                            ],
+                                                          )
+                                                        );
+                                                      },
+                                                    );
                                       },
                                       child: Text(
                                         username,
@@ -356,16 +383,30 @@ class UserPage extends StatelessWidget {
                                                             color: const Color.fromARGB(255, 39, 39, 39),
                                                           ),
                                                           child: const Column( 
-                                                            children: [ 
-                                                              Text('Компания 1', style: TextStyle(color: Colors.white)),
+                                                            children: [
+                                                              SizedBox(height: 15),
+                                                              Row( 
+                                                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                                children: [ 
+                                                                  Text('Компания 1', style: TextStyle(color: Colors.white, fontSize: 20)),
+                                                                  Text('Рейтинг: 4.5', style: TextStyle(color: Colors.white, fontSize: 20)),
+                                                                ],
+                                                              ),
+                                                              Divider(color: Colors.white),
                                                               Text('Описание компании', style: TextStyle(color: Colors.white)),
+                                                              Divider(color: Colors.white),
+                                                              Text('Контактное лицо', style: TextStyle(color: Colors.white, fontSize: 18)),
+                                                              Text('Телефон', style: TextStyle(color: Colors.white, fontSize: 18)),
                                                             ],
                                                           )
                                                         );
                                                       },
                                                     );
                                                   },
-                                                  child: const Text('Компания: Компания 1', style: TextStyle(color: Colors.white)),
+                                                  child: MouseRegion( 
+                                                    cursor: SystemMouseCursors.click,
+                                                    child: const Text('Компания 1', style: TextStyle(color: Colors.white, decoration: TextDecoration.underline)),
+                                                  )
                                                 ),
                                                 const Text('Рейтинг: 4.5', style: TextStyle(color: Colors.white)),
                                               ]
