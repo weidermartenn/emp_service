@@ -1,12 +1,27 @@
+import 'dart:ffi' as prefix;
 import 'package:Employment_Service/pages/User/dialogs.dart';
 import 'package:flutter/material.dart';
 import 'package:Employment_Service/classes/classes.dart';
 import 'package:Employment_Service/pages/Auth/auth_page.dart';
+import 'user.dart';
 
-class UserPage extends StatelessWidget {
+class UserPage extends StatefulWidget {
   final String username;
   const UserPage({required this.username});
-  
+
+  @override
+  _UserPageState createState() => _UserPageState();
+}
+
+class _UserPageState extends State<UserPage>{ 
+  String _parameter = '';
+ 
+  void handleButtonTap(String parameter) {
+  setState(() {
+      _parameter = parameter;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -70,9 +85,14 @@ class UserPage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      TextButton( 
-                        onPressed: () { 
-                          benefitsDialog(context);
+                      TextButton(
+                        onPressed: () {
+                          showModalBottomSheet(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return BenefitsDialog();
+                            },
+                          );
                         },
                         child: const Text('Пособия', style: TextStyle(color: Colors.white, fontSize: 20)),
                       ),
@@ -99,35 +119,12 @@ class UserPage extends StatelessWidget {
                                   MouseRegion( 
                                     cursor: SystemMouseCursors.click,
                                     child: GestureDetector(
-                                      onTap: () {
-                                                  showModalBottomSheet( 
-                                                      context: context, 
-                                                      builder: (BuildContext context) { 
-                                                        return Container( 
-                                                          width: 500,
-                                                          height: 900,
-                                                          decoration: BoxDecoration(
-                                                            color: Color.fromARGB(255, 43, 32, 32),
-                                                          ),
-                                                          child: const Column( 
-                                                            children: [
-                                                              SizedBox(height: 15),
-                                                              Text('ФИО', style: TextStyle(color: Colors.white, fontSize: 20)),
-                                                              Divider(color: Colors.white),
-                                                              Text('Опыт работы', style: TextStyle(color: Colors.white)),
-                                                              Text('Образование', style: TextStyle(color: Colors.white)),
-                                                              Text('Специальность', style: TextStyle(color: Colors.white)),
-                                                              Divider(color: Colors.white),
-                                                              Text('Номер телефона', style: TextStyle(color: Colors.white, fontSize: 18)),
-                                                              
-                                                            ],
-                                                          )
-                                                        );
-                                                      },
-                                                    );
+                                      onTap: () async {
+                                        List<Map<String, dynamic>> info = await applicantInfo(widget.username);
+                                        return accountDialog(context, info);
                                       },
                                       child: Text(
-                                        username,
+                                        widget.username,
                                         style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 20,
@@ -183,7 +180,7 @@ class UserPage extends StatelessWidget {
                                 children: [
                                   TextButton(
                                     onPressed: () {
-                                      // Sorting logic for ascending
+                                      handleButtonTap('high');
                                     },
                                     style: ButtonStyle(
                                       overlayColor: MaterialStateProperty.all<Color>(const Color.fromARGB(96, 146, 146, 146)),
@@ -212,7 +209,7 @@ class UserPage extends StatelessWidget {
                                   ),
                                   TextButton(
                                     onPressed: () {
-                                      // Sorting logic for descending
+                                      handleButtonTap('low');
                                     },
                                     style: ButtonStyle(
                                       overlayColor: MaterialStateProperty.all<Color>(const Color.fromARGB(96, 146, 146, 146)),
@@ -252,64 +249,9 @@ class UserPage extends StatelessWidget {
                               border: Border.all(color: Colors.white, width: 1),
                             ),
                             padding: const EdgeInsets.all(10),
-                            child: Column( 
-                              children: [
-                                const Text( 
-                                  'Зарлпаты', 
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15,
-                                  ),
-                                ),
-                                const SizedBox(height: 10),
-                                Row( 
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [ 
-                                    const Text('от', style: TextStyle(color: Colors.white, fontSize: 15)),
-                                    const SizedBox(width: 8),
-                                    ConstrainedBox(
-                                      constraints: const BoxConstraints.tightFor(width: 80, height: 40),
-                                      child: TextField(
-                                        style: const TextStyle(color: Colors.white, fontSize: 14),
-                                        keyboardType: TextInputType.number,
-                                        textAlignVertical: TextAlignVertical.top,
-                                        onChanged: (value) {
-                                          // Logic for handling input changes
-                                        },
-                                      ),
-                                    ),
-                                    const SizedBox(width: 8),
-                                    const Text('до', style: TextStyle(color: Colors.white, fontSize: 15)),
-                                    const SizedBox(width: 8),
-                                    ConstrainedBox(
-                                      constraints: const BoxConstraints.tightFor(width: 80, height: 40),
-                                      child: TextField(
-                                        style: const TextStyle(color: Colors.white, fontSize: 14),
-                                        keyboardType: TextInputType.number,
-                                        textAlignVertical: TextAlignVertical.top,
-                                        onChanged: (value) {
-                                          // Logic for handling input changes
-                                        },
-                                      ),
-                                    ),
-                                    const SizedBox(width: 8),
-                                  ],
-                                )
-                              ],
-                            )
-                          ),
-                          Container( 
-                            width: 250,
-                            decoration: BoxDecoration(
-                              borderRadius: const BorderRadius.all(Radius.circular(10)),
-                              color: const Color.fromARGB(255, 39, 39, 39),
-                              border: Border.all(color: Colors.white, width: 1),
-                            ),
-                            padding: const EdgeInsets.all(10),
                             child: ElevatedButton( 
                               onPressed: () {
-                                // Logic for handling button click
+                                handleButtonTap('company_order');
                               },
                               style: ButtonStyle(
                                 backgroundColor: MaterialStateProperty.all<Color>(const Color.fromARGB(255, 34, 34, 34)),
@@ -344,80 +286,45 @@ class UserPage extends StatelessWidget {
                       padding: const EdgeInsets.all(10),
                       child: Column( 
                         children: [
-                          const Text('Количество активных вакансий: 0', style: TextStyle(color: Colors.white, fontSize: 15)),
-                          const SizedBox(height: 10),
-                          Expanded( 
-                            child: ListView.builder( 
-                              itemCount: 5,
-                              scrollDirection: Axis.vertical,
-                              shrinkWrap: true,
-                              physics: const ClampingScrollPhysics(),
-                              itemBuilder:(context, index) { 
-                                return ListTile( 
-                                  title: const Text('Вакансия 1', style: TextStyle(color: Colors.white)),
-                                  subtitle: Column( 
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Container( 
-                                        width: 600,
-                                        padding: const EdgeInsets.all(10),
-                                        decoration: BoxDecoration(
-                                          borderRadius: const BorderRadius.all(Radius.circular(5)),
-                                          border: Border.all(color: Colors.white, width: 1),
-                                        ),
-                                        child: Row( 
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [ 
-                                            Column( 
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [ 
-                                                const Text('Описание: Описание вакансии', style: TextStyle(color: Colors.white)),
-                                                GestureDetector( 
-                                                  onTap: () { 
-                                                    showModalBottomSheet( 
-                                                      context: context, 
-                                                      builder: (BuildContext context) { 
-                                                        return Container( 
-                                                          width: 500,
-                                                          decoration: BoxDecoration(
-                                                            color: const Color.fromARGB(255, 39, 39, 39),
-                                                          ),
-                                                          child: const Column( 
-                                                            children: [
-                                                              SizedBox(height: 15),
-                                                              Row( 
-                                                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                                children: [ 
-                                                                  Text('Компания 1', style: TextStyle(color: Colors.white, fontSize: 20)),
-                                                                  Text('Рейтинг: 4.5', style: TextStyle(color: Colors.white, fontSize: 20)),
-                                                                ],
-                                                              ),
-                                                              Divider(color: Colors.white),
-                                                              Text('Описание компании', style: TextStyle(color: Colors.white)),
-                                                              Divider(color: Colors.white),
-                                                              Text('Контактное лицо', style: TextStyle(color: Colors.white, fontSize: 18)),
-                                                              Text('Телефон', style: TextStyle(color: Colors.white, fontSize: 18)),
-                                                            ],
-                                                          )
-                                                        );
-                                                      },
-                                                    );
-                                                  },
-                                                  child: MouseRegion( 
-                                                    cursor: SystemMouseCursors.click,
-                                                    child: const Text('Компания 1', style: TextStyle(color: Colors.white, decoration: TextDecoration.underline)),
-                                                  )
-                                                ),
-                                                const Text('Рейтинг: 4.5', style: TextStyle(color: Colors.white)),
-                                              ]
-                                            ),
-                                            const Text('39824 руб.', style: TextStyle(color: Colors.white, fontSize: 20)),
-                                          ]
-                                        )
-                                      )
-                                    ],
-                                  )
+                          FutureBuilder<int>(
+                            future: vacanciesCount(),
+                            builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+                              if (snapshot.connectionState == ConnectionState.waiting) {
+                                return const Text(
+                                  'Загрузка...',
+                                  style: TextStyle(color: Colors.white, fontSize: 15),
                                 );
+                              } else if (snapshot.hasError) {
+                                return const Text(
+                                  'Ошибка при загрузке данных',
+                                  style: TextStyle(color: Colors.white, fontSize: 15),
+                                );
+                              } else {
+                                return Text(
+                                  'Количество активных вакансий: ${snapshot.data}',
+                                  style: const TextStyle(color: Colors.white, fontSize: 15),
+                                );
+                              }
+                            },
+                          ),
+                          const SizedBox(height: 10),
+                          Expanded(
+                            child: FutureBuilder<List<Map<String, dynamic>>>(
+                            future: vacancies(_parameter),
+                              builder: (BuildContext context, AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
+                                if (snapshot.connectionState == ConnectionState.waiting) {
+                                  return const Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                } else if (snapshot.hasError) {
+                                  return const Text(
+                                    'Error loading data',
+                                    style: TextStyle(color: Colors.white),
+                                  );
+                                } else {
+                                  var vacancies = snapshot.data;
+                                  return vacanciesList(vacancies);
+                                }
                               },
                             )
                           )

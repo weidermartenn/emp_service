@@ -175,17 +175,17 @@ class _AuthPageState extends State<AuthPage>{
                                                   successDialog(context);
                                                 }
                                                 else if (result == 'true') {
-                                                  var accounts = Accounts('id', 'phone', 'password', 'salt', data);
+                                                  var accounts = Accounts('id', 'password', 'username', 'phone_number');
                                                   Navigator.push( 
                                                     context,
                                                     MaterialPageRoute( 
-                                                      builder: (context) => UserPage(username: accounts.getName()),
+                                                      builder: (context) => UserPage(username: accounts.username),
                                                     )
                                                   );
                                                   successDialog(context);
                                                 }
                                                 else{
-                                                  debugPrint('daun');
+                                                  notFoundDialog(context);
                                                 }
                                               }
                                               else {
